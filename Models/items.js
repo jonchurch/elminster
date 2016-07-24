@@ -5,6 +5,7 @@ const Items = function(){
 	itemList = [];
 }
 Items.prototype.getItemList = function(){ return this.itemlist; }
+Items.prototype.loadItems = function(){};
 
 
 /**
@@ -26,3 +27,4 @@ Item.prototype.getStatic = function(){ return this.static; }
 Item.prototype.getUUID = function(){ return this.id; }
 
 util.inherits(Item, EventEmitter);
+module.exports

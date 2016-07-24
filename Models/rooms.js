@@ -4,6 +4,19 @@ const Rooms = function(){
 	this.roomList = []
 };
 Rooms.prototype.getRoomList = function(){ return this.roomList; }
+Rooms.prototype.loadRooms = function(){
+	var rooms_data = require('..Rooms/teal.json');
+        var rooms = [];
+        for (i = 0; i < rooms_data.length; i += 1) {
+            var config = rooms_data[i];
+            var room = new Room();
+            // console.log(config);
+            room.load(config);
+            rooms.push(room);
+        }
+        console.log('The rooms were just loaded!');
+    };
+}
 
 /**
  * Room Constructor
@@ -36,4 +49,4 @@ Room.prototype.removeItem = function(item){ delete this.items[item]; }
 Room.prototype.addItem = function(item){ this.items.push(item); }
 
 util.inherits(Room, EventEmitter);
-// module.exports = Players;
+module.exports = Room;

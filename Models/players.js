@@ -6,6 +6,7 @@ let Players = function() {
 	this.playerList = [];
 };
 Players.prototype.getPlayers = function() { return this.playerList; };
+Players.prototype.loadPlayers = function(){};
 
 /**
  * Player Constructor
@@ -34,5 +35,5 @@ Player.prototype.addToInventory = function(item) {this.inventory.push(item);
 	};
 
 util.inherits(Player, EventEmitter);
-// module.exports = Players;
+module.exports = Player;
 
