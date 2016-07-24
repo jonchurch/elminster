@@ -1,0 +1,39 @@
+const util = require('util');
+const EventEmitter = require('events').EventEmitter;
+const Rooms = function(){
+	this.roomList = []
+};
+Rooms.prototype.getRoomList = function(){ return this.roomList; }
+
+/**
+ * Room Constructor
+ * @param {int}  id         Room ID
+ * @param {string}  name       Player visible room name
+ * @param {string}  desc       Room description
+ * @param {array}  exits      Objects containing direction and room id
+ * @param {array}  items      List of items in room
+ * @param {boolean} isQuitRoom Exit game upon entry
+ */
+const Room = function(id, name, desc, exits, items, isQuitRoom){
+	this.id = id;
+	this.name = name;
+	this.description = desc;
+	this.exits = exits || [];
+	this.items = items || [];
+	this.isQuitRoom = isQuitRoom || false;
+	this.on('PLAYER_ENTER', function(roomID, player){
+	if (roomID === this.id) {
+		if ('player state') { console.log('do something within the room'); }
+	} 
+})
+};
+Room.prototype.getID = function(){ return this.id; }
+Room.prototype.getName = function(){ return this.name; }
+Room.prototype.getDescription = function(){ return this.description; }
+Room.prototype.getDescription = function(){ return this.exits; }
+Room.prototype.getItems = function(){ return this.items; }
+Room.prototype.removeItem = function(item){ delete this.items[item]; }
+Room.prototype.addItem = function(item){ this.items.push(item); }
+
+util.inherits(Room, EventEmitter);
+// module.exports = Players;
