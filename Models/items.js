@@ -1,10 +1,11 @@
+/*jshint esversion: 6 */
 const util = require('util');
 const EventEmitter = require('events').EventEmitter;
 
 const Items = function(){
 	itemList = [];
-}
-Items.prototype.getItemList = function(){ return this.itemlist; }
+};
+Items.prototype.getItemList = function(){ return this.itemlist; };
 Items.prototype.loadItems = function(){};
 
 
@@ -20,11 +21,11 @@ const Item = function(name, desc, static, uuid){
 	this.description = desc;
 	this.static = static;
 	this.uuid = uuid;
-}
-Item.prototype.getName = function(){ return this.name; }
-Item.prototype.getDescription = function(){ return this.descritpion; }
-Item.prototype.getStatic = function(){ return this.static; }
-Item.prototype.getUUID = function(){ return this.id; }
+};
+Item.prototype.getName = function(){ return this.name; };
+Item.prototype.getDescription = function(){ return this.descritpion; };
+Item.prototype.getStatic = function(){ return this.static; };
+Item.prototype.getUUID = function(){ return this.id; };
 
 util.inherits(Item, EventEmitter);
-module.exports
+module.exports = Items;

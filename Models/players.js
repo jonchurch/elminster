@@ -1,12 +1,16 @@
-const util  = require('util');
+/*jshint esversion: 6 */
+const util = require('util');
 const EventEmitter = require('events').EventEmitter;
 
 let Players = function() {
 
 	this.playerList = [];
 };
-Players.prototype.getPlayers = function() { return this.playerList; };
+Players.prototype.getPlayerList = function() { return this.playerList; };
 Players.prototype.loadPlayers = function(){};
+Players.prototype.newPlayer = function(){
+	return new Player(772, 'Sheckla');
+};
 
 /**
  * Player Constructor
@@ -20,7 +24,11 @@ let Player = function(id, name, inv, loc){
 	this.name = name;
 
 	this.inventory = inv || [];
-	this.location = location;
+	this.location = loc || 0;
+
+	this.on('MOVE', function(loc){
+		this.updateLocation(loc);
+	});
 };
 
 Player.prototype.getId = function() { return this.id; };
@@ -34,6 +42,7 @@ Player.prototype.addToInventory = function(item) {this.inventory.push(item);
 	this.emit('PLAYER_ADDED_ITEM');
 	};
 
+
 util.inherits(Player, EventEmitter);
-module.exports = Player;
+module.exports = Players;
 

@@ -1,3 +1,4 @@
+/*jshint esversion: 6 */
 const util = require('util');
 const eventEmitter = require('events').EventEmitter;
 
@@ -15,5 +16,18 @@ process.stdin.on('data', function(data) {
 		process.exit();
         return;
     }
-    ctrl.emit(text);
+    ctrl.emit(text, 2);
+});
+const Items = require('./Models/items.js');
+const Players = require('./Models/players.js');
+const Rooms = require('./Models/rooms.js');
+let rooms = new Rooms();
+let players = new Players();
+rooms.loadRooms();
+player1 = players.newPlayer();
+player1.on('MOVE', function(loc){
+		this.updateLocation(loc);
+	});
+ctrl.on('PLAYER_UPDATED_LOC', function(){
+	console.log('There you go movin again!');
 });
