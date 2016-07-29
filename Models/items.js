@@ -3,7 +3,7 @@ const util = require('util');
 const EventEmitter = require('events').EventEmitter;
 
 const Items = function(){
-	itemList = [];
+	this.itemList = [];
 };
 Items.prototype.getItemList = function(){ return this.itemlist; };
 Items.prototype.loadItems = function(){};

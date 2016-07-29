@@ -8,7 +8,7 @@ Rooms.prototype.getRoomList = function() {
     return this.roomList;
 };
 Rooms.prototype.loadRooms = function() {
-    var json = require('../Rooms/teal.json');
+    var json = require('../data/teal.json');
     for (var key in json) {
         if (json.hasOwnProperty(key)) {
             let item = json[key];
