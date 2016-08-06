@@ -1,6 +1,6 @@
 /*jshint esversion: 6 */
 const util = require('util');
-const EventEmitter = require('events').EventEmitter;
+const ps = require('../pubsub.js');
 const Rooms = function() {
     this.roomList = [];
 };
@@ -36,17 +36,20 @@ Rooms.prototype.loadRooms = function() {
  * @param {boolean} isQuitRoom Exit game upon entry
  */
 const Room = function(id, name, desc, exits, items, isQuitRoom) {
-    this.id = id;
-    this.name = name;
-    this.description = desc;
-    this.exits = exits || [];
-    this.items = items || [];
-    this.isQuitRoom = isQuitRoom || false;
-    this.on('PLAYER_ENTER', function(roomID, player) {
-        if (roomID === this.id) {
-            if ('player state') { console.log('do something within the room'); }
-        }
+    const self = this;
+
+    self.id = id;
+    self.name = name;
+    self.description = desc;
+    self.exits = exits || [];
+    self.items = items || [];
+    self.isQuitRoom = isQuitRoom || false;
+
+    const roomString = 'room/' + self.id;
+    ps.subscribe(roomString + '/getDescription', function(data){
+     console.log(self.description);
     });
+
 };
 Room.prototype.getID = function() {
     return this.id;
@@ -66,5 +69,4 @@ Room.prototype.getItems = function() {
 Room.prototype.removeItem = function(item) { delete this.items[item]; };
 Room.prototype.addItem = function(item) { this.items.push(item); };
 
-util.inherits(Room, EventEmitter);
 module.exports = Rooms;

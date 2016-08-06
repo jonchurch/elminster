@@ -1,6 +1,5 @@
 /*jshint esversion: 6 */
 const util = require('util');
-const EventEmitter = require('events').EventEmitter;
 
 const Items = function(){
 	this.itemList = [];
@@ -27,5 +26,4 @@ Item.prototype.getDescription = function(){ return this.descritpion; };
 Item.prototype.getStatic = function(){ return this.static; };
 Item.prototype.getUUID = function(){ return this.id; };
 
-util.inherits(Item, EventEmitter);
 module.exports = Items;

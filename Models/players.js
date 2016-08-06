@@ -12,7 +12,9 @@ Players.prototype.getPlayerList = function() {
 };
 Players.prototype.loadPlayers = function() {};
 Players.prototype.newPlayer = function(id, name, inv, loc) {
-    return new Player(id, name, inv, loc);
+    let player = new Player(id, name, inv, loc);
+    this.playerList.push(player);
+    return player;
 };
 
 /**
@@ -24,12 +26,15 @@ Players.prototype.newPlayer = function(id, name, inv, loc) {
  */
 
 let Player = function(id, name, inv, loc) {
-    // EventEmitter.call(this);
-    // 
+    const self = this; 
+    self.id = id;
+    self.name = name;
+    self.inventory = inv || [];
+    self.location = loc || 0;
+
+    const userString = 'user/' + self.id; 
 
     ps.subscribe('hi', function(data) {
-        if (data) {
-        }
         console.log(self.name + ': \"Oh hello there\"');
     });
 
@@ -42,14 +47,19 @@ let Player = function(id, name, inv, loc) {
         else return;
     });
 
-    var self = this; 
+    ps.subscribe(userString + '/look', function(data){
+            let roomString = 'room/' + self.getLocation();
+            console.log(data);
+            if (self.inventory.includes(data) ) {
+                console.log('You pull a badly squished slice of pizza out of your pocket');
+                return;
+            }
+ps.publish(roomString + '/getDescription', self.id);
+            
 
-    self.id = id;
-    self.name = name;
+    });
 
-    self.inventory = inv || [];
-    self.location = loc || 0;
-
+    
     /*
         this.on('MOVE', function(loc){
             this.updateLocation(loc);
@@ -75,7 +85,7 @@ Player.prototype.getLocation = function() {
 };
 Player.prototype.updateLocation = function(loc) {
     this.location = loc;
-    ps.publish('player/changed_location');
+    ps.publish('room/' + loc + '/getDescription');
 };
 Player.prototype.addToInventory = function(item) {
     this.inventory.push(item);

@@ -38,6 +38,7 @@ ps.subscribe('player/addToInv', function(){
 	console.log('heard player inv add!');
 });
 
+
 /**
  *  The goal is to allow any model to emit events that can be listened to by any other model or controller
  *
